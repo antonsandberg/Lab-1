@@ -1,16 +1,15 @@
 import Test.QuickCheck
 
 {- Lab 1
-   Date: 
-   Authors:
+   Date: 2022-11-02
+   Authors: Anton Sandberg
    Lab group:
  -}
 --------------------------------------------
 power :: Integer -> Integer -> Integer
-power n k
-   | k < 0 = error "power negative argument!"
 power n 0  = 1
-power n k  = n * power n (k-1)
+power n k  | k < 0 = error "power negative argument!"
+           | otherwise =  n * power n (k-1)
 
 -- A ------------------------
 -- stepsPower n k gives the number of steps that
@@ -18,22 +17,21 @@ power n k  = n * power n (k-1)
 
 stepsPower :: Integer -> Integer -> Integer
 stepsPower n k    | k == 0 = 1
-                  |otherwise = k+1 
+                  | otherwise = k+1 
 
 
 -- B -------------------------
 -- power1
 power1 :: Integer -> Integer -> Integer
-power1 n k 
-   | k < 0 = error "power negative argument!"
-power1 n k = product [n | x <- [1..k]]
+power1 n 0 = 1
+power1 n k | k < 0 = error "Power negative argument!"
+           | otherwise = product [n | x <- [1..k]]
 
 -- C -------------------------
 -- power2
 power2 :: Integer -> Integer -> Integer
-power2 n k 
-   | k < 0 = error "power negative argument!"
 power2 n 0 = 1
+power2 n k  | k < 0 = error "Power negative argument!"
 power2 n k  | odd k =  n * power2 n (k-1)
             | otherwise = power2 (n * n) (k `div` 2)
 
@@ -51,8 +49,7 @@ prop_powers :: Integer -> Integer -> Bool
 prop_powers n k = (n^k == power n k) && (n^k == power1 n k) && (n^k == power2 n k)
 
 
--- Using soem and clauses to make sure all of these compile to true (which they should if my implementations are correct-
--- Use the prop_powers function together with a list comprehension of values to determine if my functions holds up for different values
+-- We first use the prop_powers who isn't covering negative numbers, and revising it down below
 
 powerTest :: Bool
 powerTest = and [prop_powers n k | n <- [-20.. 20], k <- [-20..20]]
