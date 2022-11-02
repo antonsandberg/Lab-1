@@ -3,7 +3,7 @@ import Test.QuickCheck
 {- Lab 1
    Date: 2022-11-02
    Authors: Anton Sandberg
-   Lab group:
+   Lab group: Group 48 (solo for the first Lab)
  -}
 --------------------------------------------
 power :: Integer -> Integer -> Integer
@@ -17,7 +17,7 @@ power n k  | k < 0 = error "power negative argument!"
 
 stepsPower :: Integer -> Integer -> Integer
 stepsPower n k    | k == 0 = 1
-                  | otherwise = k+1 
+                  | otherwise = k + 1 
 
 
 -- B -------------------------
